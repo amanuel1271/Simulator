@@ -139,7 +139,7 @@ instruction handle_J_inst(unsigned int op, const char* buffer)
 
 instruction parsing_instr(const char *buffer, const int index)
 {
-    instruction instr;
+    	instruction instr;
 
 	mem_write_32(MEM_TEXT_START + index, fromBinary((char*)buffer));
 
