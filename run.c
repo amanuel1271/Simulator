@@ -24,25 +24,15 @@ enum op_type_
 
 enum op_type_ identify_type_(short op)
 {
-
 	enum op_type_ type;
 
 	if (op == 0x0)
-	{
 		type = R;
-	}
-
 	else if (op == 0x2 || op == 0x3)
-	{
 		type = J;
-	}
-
 	else
-	{
 		type = I;
-	}
 
-	
 	return type;
 
 }
@@ -244,29 +234,16 @@ void process_instruction()
     }
 
     instruction* current_instr = get_inst_info(pc);
-
-
-
     short opcode = current_instr->opcode;
 
     enum op_type_ type = identify_type_(opcode);
 
     if (type == R)
-    {
         process_R_instruction(current_instr);
-
-    }
-
     else if (type == J)
-    {
         process_J_instruction(current_instr);
-    }
-
     else
-    {
         process_I_instruction(current_instr);
-        
-    }
     
 	
 }
