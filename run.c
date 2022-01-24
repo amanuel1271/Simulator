@@ -58,52 +58,25 @@ void process_R_instruction(instruction* inst_to_exec)
 
 
     if (funct_field == 0x21) // addu
-    {
         CURRENT_STATE.REGS[rd] = CURRENT_STATE.REGS[rs] + CURRENT_STATE.REGS[rt];
-
-    }
     else if (funct_field == 0x24) //and
-    {
         CURRENT_STATE.REGS[rd] = CURRENT_STATE.REGS[rs] & CURRENT_STATE.REGS[rt];
-
-    }
     else if (funct_field == 0x27) // nor
-    {
         CURRENT_STATE.REGS[rd] = ~(CURRENT_STATE.REGS[rs] | CURRENT_STATE.REGS[rt]);
-
-    }
     else if (funct_field == 0x25) // or
-    {
         CURRENT_STATE.REGS[rd] = CURRENT_STATE.REGS[rs] | CURRENT_STATE.REGS[rt];
-
-    }
     else if (funct_field == 0x2B) //sltu
-
-    {
         CURRENT_STATE.REGS[rd] = (CURRENT_STATE.REGS[rs] < CURRENT_STATE.REGS[rt])? TRUE : FALSE;
-
-    }
     else if (funct_field == 0x00 ) //sll
-    {
         CURRENT_STATE.REGS[rd] =  CURRENT_STATE.REGS[rt] << shamt;
-
-    }
     else if (funct_field == 0x02 ) //srl
-    {
         CURRENT_STATE.REGS[rd] =  CURRENT_STATE.REGS[rt] >> shamt;
-
-    }
     else if (funct_field == 0x23 ) //subu
-    {
         CURRENT_STATE.REGS[rd] = CURRENT_STATE.REGS[rs] - CURRENT_STATE.REGS[rt];
-
-    }
     else if (funct_field == 0x8) //jr
     {
-
         CURRENT_STATE.PC = CURRENT_STATE.REGS[rs];
         return;
-
     }
 
     CURRENT_STATE.PC += 4;
@@ -122,29 +95,15 @@ void process_I_instruction(instruction* inst_to_exec)
     uint32_t zero_extended = (unsigned short)immediate;
 
     if (opcode == 0x9) //addiu
-    {
         CURRENT_STATE.REGS[rt] = CURRENT_STATE.REGS[rs] + sign_extended;
-    }
     else if (opcode == 0xC ) //andi
-    {
         CURRENT_STATE.REGS[rt] = CURRENT_STATE.REGS[rs] & zero_extended;
-        
-    }
     else if (opcode == 0xF ) //lui
-    {
         CURRENT_STATE.REGS[rt] = zero_extended << 16;
-        
-    }
     else if (opcode == 0xD ) //ori
-    {
         CURRENT_STATE.REGS[rt] = CURRENT_STATE.REGS[rs] | zero_extended;
-        
-    }
     else if (opcode == 0xB ) //sltiu
-    {
         CURRENT_STATE.REGS[rt] = (CURRENT_STATE.REGS[rs] < sign_extended)? TRUE : FALSE;
-        
-    }
     else if (opcode == 0x23 ) //lw
     {
         uint32_t addr_mem = sign_extended + CURRENT_STATE.REGS[rs];
@@ -154,31 +113,21 @@ void process_I_instruction(instruction* inst_to_exec)
     {
         uint32_t addr_mem = sign_extended + CURRENT_STATE.REGS[rs];
         mem_write_32(addr_mem,CURRENT_STATE.REGS[rt]);
-        
     }
     else if (opcode ==  0x4) //BEQ
-    {
-
         if (CURRENT_STATE.REGS[rs] == CURRENT_STATE.REGS[rt])
         {
             CURRENT_STATE.PC = CURRENT_STATE.PC + 4 + (sign_extended << 2);
             return;
 
         }
-    
-        
-    }
     else if (opcode == 0x5 ) //BNE
-    {
         if (CURRENT_STATE.REGS[rs] != CURRENT_STATE.REGS[rt])
         {
             CURRENT_STATE.PC = CURRENT_STATE.PC + 4 + (sign_extended << 2);
             return;
 
         }
-
-        
-    }
 
     CURRENT_STATE.PC += 4;
 
@@ -193,17 +142,12 @@ void process_J_instruction(instruction* inst_to_exec)
     uint32_t upper_4_bits = (CURRENT_STATE.PC + 4) & 0xF0000000;
 
     if (opcode == 0x2) //j
-    {
         CURRENT_STATE.PC = upper_4_bits | jump_target;
-    }
     else if(opcode == 0x3) //jal
     {
         CURRENT_STATE.REGS[31] = CURRENT_STATE.PC + 4;
         CURRENT_STATE.PC = upper_4_bits | jump_target;
-
     }
-
-
 
 }
 
